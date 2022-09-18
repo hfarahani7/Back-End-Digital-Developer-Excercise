@@ -1,0 +1,18 @@
+Category name	HEALTH AND WELLNESS, ARTS AND CULTURE
+Event title	National Campus Safety Awareness Month
+Datetime	September 25 - October 1 • 11:00am – 5:00pm
+Location	Ruth S. Harley University Center, Adele and Herbert J. Klapper Art Gallery
+Description	The Department of Public Safety and Transportation, in conjunction with our partners around campus, offers a full schedule of programming and virtual events throughout the month to enhance the safety of our campus.
+
+Link		event_category.link
+Link		event.link
+Id		event_category.id
+Id		event.id
+Date		event.date(2022-08-17T12:23:37) OR date_gmt? modified? modified_gmt?
+Title		event.title
+category	event_cvategory[295, ...](can be multiple) OR  "event_audience"???
+
+Page number	Located in the response header
+Location	Swirlbul Library
+Start		event.start
+End		event.end
