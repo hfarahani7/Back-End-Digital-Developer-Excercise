@@ -1,6 +1,5 @@
 # Back-End-Digital-Developer-Exercise
 
-Running project <br />
 Ensure versions match the following: <br />
 Python 3.10.3 <br />
 Django 4.0.1 <br />
