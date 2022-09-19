@@ -5,7 +5,6 @@ from django.template import loader
 from dateutil import parser
 
 import requests
-import datetime
 
 categoriesUrl = "https://www.adelphi.edu/wp-json/wp/v2/event_category"
 eventUrl = "https://www.adelphi.edu/wp-json/wp/v2/event"
@@ -44,9 +43,8 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def getCategories():
-    #returns list of raw json from WP event categories endpoint
     currPage = 1
-    r = requests.get(eventUrl + "?page=" + str(currPage))
+    r = requests.get(categoriesUrl + "?page=" + str(currPage))
     pageCount = int(r.headers["X-WP-TotalPages"])
     eventCategoryJSON = []
 
@@ -57,8 +55,13 @@ def getCategories():
 
     return(eventCategoryJSON)
 
+def getCategoryDict():
+    #Will replace getCategories()
+    #Would be nice to create a dict of event categories here, rather than iterating through every single category
+    #when we pass events to the template
+    pass
+
 def getEvents():
-    #returns list of raw json from WP events endpoint
     currPage = 1
     r = requests.get(eventUrl + "?page=" + str(currPage))
     pageCount = int(r.headers["X-WP-TotalPages"])
@@ -70,16 +73,3 @@ def getEvents():
         r = requests.get(eventUrl + "?page=" + str(currPage))
 
     return(eventJSON)
-
-# def fetchWP(url):
-#     currPage = 1
-#     r = requests.get(url + "?page=" + str(currPage))
-#     pageCount = int(r.headers["X-WP-TotalPages"])
-#     jsonTemp = []
-
-#     while(currPage <= pageCount):
-#         currPage += 1
-#         jsonTemp = jsonTemp + r.json()
-#         r = requests.get(url + "?page=" + str(currPage))
-    
-#     return(jsonTemp)

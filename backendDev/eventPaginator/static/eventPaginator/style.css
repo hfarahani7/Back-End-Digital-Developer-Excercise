@@ -1,11 +1,14 @@
 .categories {
     font-weight: bold;
     font-size: .82em;
+    color: #4f2c1d;
+    text-decoration: underline;
+    text-decoration-color:#ffb500;
 }
 
 .title {
     font-weight: bold;
-    font-size: 2em;
+    font-size: 1.75em;
 }
 
 .date {
