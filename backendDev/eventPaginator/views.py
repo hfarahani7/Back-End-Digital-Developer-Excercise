@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from dateutil import parser
+from datetime import timedelta
 
 import requests
 
@@ -24,16 +25,18 @@ def index(request):
             category_str = category_str[:-2]
 
         start_parsed = parser.parse(event["start"])
+        start_parsed = start_parsed - timedelta(hours=4)
         end_parsed = parser.parse(event["end"])
+        end_parsed = end_parsed - timedelta(hours=4)
 
         event_list.append({
             "categories": category_str,
             "link": event["link"],
             "title": event["title"],
-            "startDate": start_parsed.strftime("%B %m"),
-            # "start-time": 
-            "endDate": end_parsed.strftime("%B %m"),
-            # "end-time":
+            "startDate": start_parsed.strftime("%B %d"),
+            "startTime": start_parsed.strftime("%I %p"),
+            "endDate": end_parsed.strftime("%B %d"),
+            "endTime": end_parsed.strftime("%I:%M %p"),
             "location": event["location"],
             "description": event["image_alt_text"]
         })
