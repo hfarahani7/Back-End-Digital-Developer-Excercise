@@ -1,0 +1,22 @@
+.categories {
+    font-weight: bold;
+    font-size: .82em;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.date {
+    font-weight: bold;
+}
+
+.location {
+    font-weight: bold;
+}
+
+.description {
+    color: #4f2c1d;
+    font-size: 1.23em;
+}
