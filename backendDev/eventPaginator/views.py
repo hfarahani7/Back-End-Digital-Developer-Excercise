@@ -2,6 +2,7 @@ from turtle import title
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from django.core.paginator import Paginator
 from dateutil import parser
 from datetime import timedelta
 
@@ -11,6 +12,7 @@ categoriesUrl = "https://www.adelphi.edu/wp-json/wp/v2/event_category"
 eventUrl = "https://www.adelphi.edu/wp-json/wp/v2/event"
 
 def index(request):
+    # eventCategories = getCategoryDict()
     eventCategories = getCategories()
     events = getEvents()
     event_list = []
@@ -23,6 +25,10 @@ def index(request):
                     category_str = category_str + category["name"] + ", "
         if(len(category_str) > 0):
             category_str = category_str[:-2]
+
+        # category_str = ""
+        # for categoryId in event["event_category"]:
+        #     category_str = category_str + eventCategories[categoryId]
 
         start_parsed = parser.parse(event["start"])
         start_parsed = start_parsed - timedelta(hours=4)
@@ -41,9 +47,14 @@ def index(request):
             "description": event["image_alt_text"]
         })
 
-    template = loader.get_template('eventPaginator/index.html')
-    context = {'event_list': event_list}
-    return HttpResponse(template.render(context, request))
+    p = Paginator(event_list, 50)
+    page_number = request.GET.get('page')
+    page_obj = p.get_page(page_number)
+    return render(request, 'eventPaginator/index.html', {'page_obj': page_obj})
+
+    # template = loader.get_template('eventPaginator/index.html')
+    # context = {'event_list': event_list}
+    # return HttpResponse(template.render(context, request))
 
 def getCategories():
     currPage = 1
@@ -58,11 +69,21 @@ def getCategories():
 
     return(eventCategoryJSON)
 
-def getCategoryDict():
-    #Will replace getCategories()
-    #Would be nice to create a dict of event categories here, rather than iterating through every single category
-    #when we pass events to the template
-    pass
+# def getCategoryDict():
+#     currPage = 1
+#     eventCategoryJSON = {}
+
+#     r = requests.get(categoriesUrl + "?page=" + str(currPage))
+#     for row in r.json():
+#             eventCategoryJSON[row["id"]] = row["name"]
+#     pageCount = int(r.headers["X-WP-TotalPages"])
+
+#     while(currPage <= pageCount):
+#         currPage += 1
+#         r = requests.get(categoriesUrl + "?page=" + str(currPage))
+#         for row in r.json():
+#             eventCategoryJSON[row["id"]] = row["name"]
+#     return(eventCategoryJSON)
 
 def getEvents():
     currPage = 1
