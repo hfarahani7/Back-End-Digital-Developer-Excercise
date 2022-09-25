@@ -1,7 +1,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'eventPaginator/style.css' %}">
 
-{% for event in page_obj %}
+{% for event in page_obj.event_list %}
     <div class="categories">
         {{ event.categories }}
     </div>
